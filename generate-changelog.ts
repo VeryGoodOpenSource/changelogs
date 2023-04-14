@@ -26,6 +26,7 @@ interface Repo {
 
 const org = "verygoodopensource";
 
+const now = new Date();
 const token = Deno.env.get("CHANGELOG_GITHUB_TOKEN");
 
 const headers = { Authorization: `Bearer ${token}` };
@@ -34,7 +35,7 @@ const githubApi = "https://api.github.com";
 
 const repositories = await getRepositories(org);
 const pullRequests = await getPullRequests(org, repositories);
-const today = format(new Date(), "MM-dd-yyyy");
+const today = format(now, "MM-dd-yyyy");
 
 console.log(`# Very Good Changelog (${today})`);
 
@@ -89,11 +90,11 @@ async function getMorePullRequests(org: string, repo: Repo, page: number = 1): P
     // Ignoring bot users.
     if (user.includes("[bot]")) continue;
 
-    const diff = difference(parse(mergedAt, "yyyy-MM-ddTHH:mm:ssZ"), new Date());
-    findMore = diff.weeks ?? 0 <= 1;
+    const diff = difference(parse(mergedAt, "yyyy-MM-ddTHH:mm:ssZ"), now);
+    findMore = (diff.weeks ?? 0) <= 1;
 
     // Too old, rest will be older so lets break.
-    if (findMore) break;
+    if (!findMore) break;
 
     pullRequests.push({
       title,
@@ -124,6 +125,11 @@ async function getRepositories(org: string): Promise<Repo[]> {
   const body = (await response.json()) as Array<JSONObject>;
 
   return body
+    .filter((element) => {
+      const pushedAt = element["pushed_at"] as string;
+      const diff = difference(parse(pushedAt, "yyyy-MM-ddTHH:mm:ssZ"), now);
+      return (diff.weeks ?? 0) <= 1 && !['changelogs', '.github'].includes(element['name'] as string);
+    })
     .map((element) => {
       return {
         name: element['name'] as string,
