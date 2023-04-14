@@ -1,0 +1,35 @@
+name: changelog
+
+on:
+  schedule:
+    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    - cron: '0 0 * * MON'
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 🔢 Setting up environment
+        id: environment
+        run: |
+          echo "year=$(date -u "+%Y")" >> $GITHUB_OUTPUT
+          echo "date=$(date -u "+%d-%m-%y")" >> $GITHUB_OUTPUT
+          echo "readableDate=$(date -u "+%b %m, %Y")" >> $GITHUB_OUTPUT
+
+      - name: 🛫 Setting up Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v1.x
+
+      - name: 🗓️ Creating directory for the year
+        run: mkdir -p {{ steps.environment.outputs.year }}
+      
+      - name: 📜 Generating CHANGELOG
+        run: deno run --allow-net --allow-env generate-changelog.ts > {{ steps.environment.outputs.year }}/{{ steps.environment.outputs.date }}.md
+
+      - name: 🏁 Create Pull Request
+        uses: peter-evans/create-pull-request@v5
+        with:
+          branch: "feat/changelog-for-{{ steps.environment.outputs.date }}"
+          commit-message: "feat: CHANGELOG for {{ steps.environment.outputs.readableDate }}"
