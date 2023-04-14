@@ -28,13 +28,13 @@ jobs:
           deno-version: v1.x
 
       - name: 🗓️ Creating directory for the year
-        run: mkdir -p {{ steps.environment.outputs.year }}
+        run: mkdir -p ${{ steps.environment.outputs.year }}
       
       - name: 📜 Generating CHANGELOG
-        run: deno run --allow-net --allow-env generate-changelog.ts > {{ steps.environment.outputs.year }}/{{ steps.environment.outputs.date }}.md
+        run: deno run --allow-net --allow-env generate-changelog.ts > ${{ steps.environment.outputs.year }}/${{ steps.environment.outputs.date }}.md
 
       - name: 🏁 Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
-          branch: "feat/changelog-for-{{ steps.environment.outputs.date }}"
-          commit-message: "feat: CHANGELOG for {{ steps.environment.outputs.readableDate }}"
+          branch: "feat/changelog-for-${{ steps.environment.outputs.date }}"
+          commit-message: "feat: CHANGELOG for ${{ steps.environment.outputs.readableDate }}"
