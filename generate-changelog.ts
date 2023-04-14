@@ -4,13 +4,13 @@ import {
   format,
   parse,
 } from "https://deno.land/std@0.160.0/datetime/mod.ts";
-​
+
 type JSONValue = string | number | boolean | JSONObject | Array<JSONValue>;
-​
+
 interface JSONObject {
   [x: string]: JSONValue;
 }
-​
+
 interface Issue {
   title: string;
   user: string;
@@ -18,21 +18,21 @@ interface Issue {
   url: string;
   closedAt: string;
 }
-​
+
 const org = "verygoodopensource";
-​
+
 const token = Deno.env.get("CHANGELOG_GITHUB_TOKEN");
-​
+
 const headers = { Authorization: `Bearer ${token}` };
-​
+
 const githubApi = "https://api.github.com";
-​
+
 const repositories = await getRepositories(org);
 const issues = await getIssues(org, repositories);
 const today = format(new Date(), "MM-dd-yyyy");
-​
+
 console.log(`# Very Good Changelog (${today})`);
-​
+
 for (const repo of repositories) {
   const repoIssues = issues[repo];
   if (repoIssues.length === 0) continue;
@@ -42,7 +42,7 @@ for (const repo of repositories) {
     console.log(`\t- ${issue.url}`);
   }
 }
-​
+
 async function getIssues(
   org: string,
   repos: Array<string>
@@ -63,13 +63,13 @@ async function getIssues(
     const response = await fetch(`${url}`, {
       headers: headers,
     });
-​
+
     if (response.status != 200) {
       throw new Error(`[ERROR] GET ${url} (${response.status})`);
     }
-​
+
     const body = (await response.json()) as Array<JSONObject>;
-​
+
     issues[repo].push(
       ...body
         .map((element) => {
@@ -88,22 +88,22 @@ async function getIssues(
         .filter((issue) => !issue.user.includes("[bot]"))
     );
   }
-​
+
   return issues;
 }
-​
+
 async function getRepositories(org: string): Promise<Array<string>> {
   const url = `${githubApi}/orgs/${org}/repos?sort=updated&per_page=100`;
   const response = await fetch(`${url}`, {
     headers: headers,
   });
-​
+
   if (response.status != 200) {
     throw new Error(`[ERROR] GET ${url} (${response.status})`);
   }
-​
+
   const body = (await response.json()) as Array<JSONObject>;
-​
+
   return body
     .filter((element) => {
       const updatedAt = element["updated_at"] as string;
