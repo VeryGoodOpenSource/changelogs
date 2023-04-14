@@ -43,4 +43,6 @@ jobs:
         with:
           base: main
           branch: "feat/changelog-for-${{ steps.environment.outputs.date }}"
+          title: "feat: CHANGELOG for ${{ steps.environment.outputs.readableDate }}"
+          body: "Look mom, I generated a changelog!!!"
           commit-message: "feat: CHANGELOG for ${{ steps.environment.outputs.readableDate }}"
