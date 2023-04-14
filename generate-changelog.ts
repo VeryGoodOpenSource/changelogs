@@ -22,7 +22,7 @@ import {
   
   const org = "verygoodopensource";
   
-  const token = Deno.env.get("GITHUB_TOKEN");
+  const token = Deno.env.get("CHANGELOG_GITHUB_TOKEN");
   
   const headers = { Authorization: `Bearer ${token}` };
   
