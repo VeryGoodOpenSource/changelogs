@@ -34,7 +34,7 @@ jobs:
         run: mkdir -p ${{ steps.environment.outputs.year }}
       
       - name: 📜 Generating CHANGELOG
-        run: deno run --allow-net --allow-env ./generate-changelog.ts > ${{ steps.environment.outputs.year }}/${{ steps.environment.outputs.date }}.md
+        run: deno run --allow-net --allow-env generate-changelog.ts > ${{ steps.environment.outputs.year }}/${{ steps.environment.outputs.date }}.md
 
       - name: 🏁 Create Pull Request
         uses: peter-evans/create-pull-request@v5
