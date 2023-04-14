@@ -1,5 +1,4 @@
 // $ deno run --allow-net --allow-env ./index.ts > CHANGELOG.md
-​
 import {
   difference,
   format,
