@@ -2,7 +2,7 @@ name: changelog
 
 on:
   schedule:
-    # Runs "at minute 55 past every hour" (see https://crontab.guru)
+    # Runs "every Monday at midnight" (see https://crontab.guru)
     - cron: '0 0 * * MON'
 
   # Just testing it, remove asap Jochum
@@ -15,6 +15,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      - name: 📚 Git Checkout
+        uses: actions/checkout@v3
+
       - name: 🔢 Setting up environment
         id: environment
         run: |
@@ -31,7 +34,7 @@ jobs:
         run: mkdir -p ${{ steps.environment.outputs.year }}
       
       - name: 📜 Generating CHANGELOG
-        run: deno run --allow-net --allow-env generate-changelog.ts > ${{ steps.environment.outputs.year }}/${{ steps.environment.outputs.date }}.md
+        run: deno run --allow-net --allow-env ./generate-changelog.ts > ${{ steps.environment.outputs.year }}/${{ steps.environment.outputs.date }}.md
 
       - name: 🏁 Create Pull Request
         uses: peter-evans/create-pull-request@v5
