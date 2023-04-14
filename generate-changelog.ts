@@ -1,4 +1,4 @@
-// $ deno run --allow-net --allow-env ./index.ts > CHANGELOG.md
+// $ deno run --allow-net --allow-env ./generate-changelog.ts > CHANGELOG.md
 import {
   difference,
   format,
@@ -11,12 +11,17 @@ interface JSONObject {
   [x: string]: JSONValue;
 }
 
-interface Issue {
+interface PullRequest {
   title: string;
   user: string;
   repo: string;
   url: string;
-  closedAt: string;
+  mergedAt: string;
+}
+
+interface Repo {
+  name: string;
+  defaultBranch: string;
 }
 
 const org = "verygoodopensource";
@@ -28,71 +33,85 @@ const headers = { Authorization: `Bearer ${token}` };
 const githubApi = "https://api.github.com";
 
 const repositories = await getRepositories(org);
-const issues = await getIssues(org, repositories);
+const pullRequests = await getPullRequests(org, repositories);
 const today = format(new Date(), "MM-dd-yyyy");
 
 console.log(`# Very Good Changelog (${today})`);
 
 for (const repo of repositories) {
-  const repoIssues = issues[repo];
-  if (repoIssues.length === 0) continue;
-  console.log(`\n## ${repo}`);
-  for (const issue of repoIssues) {
-    console.log(`- ${issue.title} (@${issue.user})`);
+  const repoPullRequests = pullRequests[repo.name];
+  if (repoPullRequests.length === 0) continue;
+  console.log(`\n## ${repo.name}`);
+  for (const issue of repoPullRequests) {
+    console.log(`- ${issue.title} ([@${issue.user}](https://github.com/${issue.user}))`);
     console.log(`\t- ${issue.url}`);
   }
 }
 
-async function getIssues(
+async function getPullRequests(
   org: string,
-  repos: Array<string>
-): Promise<{ [repo: string]: Array<Issue> }> {
-  const now = new Date();
-  const lastWeek = new Date(
-    now.getFullYear(),
-    now.getMonth(),
-    now.getDate() - 7
-  );
-  const since = format(lastWeek, "yyyy-MM-dd");
-  const issues: { [repo: string]: Array<Issue> } = {};
+  repos: Array<Repo>
+): Promise<{ [repo: string]: Array<PullRequest> }> {
+  const pullRequests: { [repo: string]: Array<PullRequest> } = {};
   for (const repo of repos) {
-    issues[repo] = [];
+    pullRequests[repo.name] = [];
   }
   for (const repo of repos) {
-    const url = `${githubApi}/repos/${org}/${repo}/issues?state=closed&sort=updated&since=${since}&per_page=100`;
-    const response = await fetch(`${url}`, {
-      headers: headers,
-    });
-
-    if (response.status != 200) {
-      throw new Error(`[ERROR] GET ${url} (${response.status})`);
-    }
-
-    const body = (await response.json()) as Array<JSONObject>;
-
-    issues[repo].push(
-      ...body
-        .map((element) => {
-          const title = element["title"] as string;
-          const url = element["url"] as string;
-          const closedAt = element["closed_at"] as string;
-          const user = (element["user"] as JSONObject)["login"] as string;
-          return {
-            title,
-            user,
-            url,
-            closedAt,
-            repo,
-          };
-        })
-        .filter((issue) => !issue.user.includes("[bot]"))
-    );
+    pullRequests[repo.name].push(...await getMorePullRequests(org, repo));
   }
 
-  return issues;
+  return pullRequests;
 }
 
-async function getRepositories(org: string): Promise<Array<string>> {
+async function getMorePullRequests(org: string, repo: Repo, page: number = 1): Promise<PullRequest[]> {
+  const url = `${githubApi}/repos/${org}/${repo.name}/pulls?state=closed&sort=updated&per_page=100&base=${repo.defaultBranch}&page=${page}&direction=desc`;
+  let pullRequests: PullRequest[] = [];
+  const response = await fetch(`${url}`, {
+    headers: headers,
+  });
+
+  if (response.status != 200) {
+    throw new Error(`[ERROR] GET ${url} (${response.status})`);
+  }
+
+  const body = (await response.json()) as Array<JSONObject>;
+
+  let findMore = true;
+  for (var element of body) {
+    const title = element["title"] as string;
+    const url = element["html_url"] as string;
+    const mergedAt = element["merged_at"] as string;
+    const user = (element["user"] as JSONObject)["login"] as string;
+
+    // Skip non-merged ones.
+    if (!mergedAt) continue;
+    
+    // Ignoring bot users.
+    if (user.includes("[bot]")) continue;
+
+    const diff = difference(parse(mergedAt, "yyyy-MM-ddTHH:mm:ssZ"), new Date());
+    findMore = diff.weeks ?? 0 <= 1;
+
+    // Too old, rest will be older so lets break.
+    if (findMore) break;
+
+    pullRequests.push({
+      title,
+      user,
+      url,
+      mergedAt,
+      repo: repo.name,
+    });
+  }
+
+  if (findMore) {
+    pullRequests.push(...await getMorePullRequests(org, repo, ++page));
+  }
+  
+  return pullRequests;
+}
+
+async function getRepositories(org: string): Promise<Repo[]> {
   const url = `${githubApi}/orgs/${org}/repos?sort=updated&per_page=100`;
   const response = await fetch(`${url}`, {
     headers: headers,
@@ -105,13 +124,10 @@ async function getRepositories(org: string): Promise<Array<string>> {
   const body = (await response.json()) as Array<JSONObject>;
 
   return body
-    .filter((element) => {
-      const updatedAt = element["updated_at"] as string;
-      const diff = difference(
-        parse(updatedAt, "yyyy-MM-ddTHH:mm:ssZ"),
-        new Date()
-      );
-      return diff.weeks ?? 0 <= 1;
-    })
-    .map((element) => element["name"] as string);
+    .map((element) => {
+      return {
+        name: element['name'] as string,
+        defaultBranch: element['default_branch'] as string,
+      };
+    });
 }
