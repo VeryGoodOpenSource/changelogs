@@ -38,6 +38,7 @@ const pullRequests = await getPullRequests(org, repositories);
 const today = format(now, "MM-dd-yyyy");
 
 console.log(`# Very Good Changelog (${today})`);
+console.log(`\nTODO: Someone should write a nice description for this CHANGELOG`);
 
 for (const repo of repositories) {
   const repoPullRequests = pullRequests[repo.name];
@@ -91,7 +92,7 @@ async function getMorePullRequests(org: string, repo: Repo, page: number = 1): P
     if (user.includes("[bot]")) continue;
 
     const diff = difference(parse(mergedAt, "yyyy-MM-ddTHH:mm:ssZ"), now);
-    findMore = (diff.weeks ?? 0) <= 1;
+    findMore = (diff.weeks ?? 0) < 1;
 
     // Too old, rest will be older so lets break.
     if (!findMore) break;
@@ -128,7 +129,7 @@ async function getRepositories(org: string): Promise<Repo[]> {
     .filter((element) => {
       const pushedAt = element["pushed_at"] as string;
       const diff = difference(parse(pushedAt, "yyyy-MM-ddTHH:mm:ssZ"), now);
-      return (diff.weeks ?? 0) <= 1 && !['changelogs', '.github'].includes(element['name'] as string);
+      return (diff.weeks ?? 0) < 1 && !['changelogs', '.github'].includes(element['name'] as string);
     })
     .map((element) => {
       return {
