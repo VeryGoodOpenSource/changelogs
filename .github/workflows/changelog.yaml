@@ -19,7 +19,7 @@ jobs:
         run: |
           echo "year=$(date -u "+%Y")" >> $GITHUB_OUTPUT
           echo "date=$(date -u "+%d-%m-%y")" >> $GITHUB_OUTPUT
-          echo "readableDate=$(date -u "+%b %m, %Y")" >> $GITHUB_OUTPUT
+          echo "readableDate=$(date -u "+%b %d, %Y")" >> $GITHUB_OUTPUT
 
       - name: 🛫 Setting up Deno
         uses: denoland/setup-deno@v1
@@ -28,7 +28,7 @@ jobs:
 
       - name: 🗓️ Creating directory for the year
         run: mkdir -p ${{ steps.environment.outputs.year }}
-      
+
       - name: 📜 Generating CHANGELOG
         run: |
           export CHANGELOG_GITHUB_TOKEN=${{ secrets.CHANGELOG_GITHUB_TOKEN}}
