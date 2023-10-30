@@ -3,7 +3,7 @@ name: changelog
 on:
   schedule:
     # Runs "every Monday at midnight" (see https://crontab.guru)
-    - cron: '0 0 * * MON'
+    - cron: "0 0 * * MON"
   workflow_dispatch:
 
 jobs:
@@ -19,7 +19,7 @@ jobs:
         run: |
           echo "year=$(date -u "+%Y")" >> $GITHUB_OUTPUT
           echo "date=$(date -u "+%d-%m-%y")" >> $GITHUB_OUTPUT
-          echo "readableDate=$(date -u "+%b %m, %Y")" >> $GITHUB_OUTPUT
+          echo "readableDate=$(date -u "+%b %d, %Y")" >> $GITHUB_OUTPUT
 
       - name: 🛫 Setting up Deno
         uses: denoland/setup-deno@v1
@@ -28,11 +28,17 @@ jobs:
 
       - name: 🗓️ Creating directory for the year
         run: mkdir -p ${{ steps.environment.outputs.year }}
-      
+
       - name: 📜 Generating CHANGELOG
         run: |
           export CHANGELOG_GITHUB_TOKEN=${{ secrets.CHANGELOG_GITHUB_TOKEN}}
           deno run --allow-net --allow-env generate-changelog.ts > ${{ steps.environment.outputs.year }}/${{ steps.environment.outputs.date }}.md
+
+      - name: Prettify/Format CHANGELOG
+        uses: creyD/prettier_action@v4.3
+        with:
+          prettier_options: --write **/*.{md}
+          only_changed: True
 
       - name: 🏁 Create Pull Request
         uses: peter-evans/create-pull-request@v5
