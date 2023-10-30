@@ -1,4 +1,5 @@
 {
-  "tabWidth": 2,
-  "useTabs": false
+"parser": "markdown",
+"tabWidth": 2,
+"useTabs": false
 }
