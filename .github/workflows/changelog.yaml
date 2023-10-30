@@ -19,7 +19,7 @@ jobs:
         run: |
           echo "year=$(date -u "+%Y")" >> $GITHUB_OUTPUT
           echo "date=$(date -u "+%d-%m-%y")" >> $GITHUB_OUTPUT
-          echo "readableDate=$(date -u "+%b %m, %Y")" >> $GITHUB_OUTPUT
+          echo "readableDate=$(date -u "+%b %d, %Y")" >> $GITHUB_OUTPUT
 
       - name: 🛫 Setting up Deno
         uses: denoland/setup-deno@v1
@@ -47,4 +47,6 @@ jobs:
           branch: "feat/changelog-for-${{ steps.environment.outputs.date }}"
           title: "feat: CHANGELOG for ${{ steps.environment.outputs.readableDate }}"
           body: "Look mom, I generated a changelog!!!"
+          author: vgvbot <vgvbot@users.noreply.github.com>
           commit-message: "feat: CHANGELOG for ${{ steps.environment.outputs.readableDate }}"
+          committer: vgvbot <vgvbot@users.noreply.github.com>
