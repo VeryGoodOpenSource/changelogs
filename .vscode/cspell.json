@@ -2,6 +2,14 @@
   "version": "0.2",
   "enabled": true,
   "language": "en",
-  "words": ["felangel"],
+  "words": [
+    "alestiago",
+    "erickzanardo",
+    "felangel",
+    "jackgllghr",
+    "renancaraujo",
+    "samanthaobrien",
+    "wolfenrain"
+  ],
   "ignorePaths": []
 }
