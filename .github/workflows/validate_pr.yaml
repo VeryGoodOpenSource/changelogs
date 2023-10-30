@@ -33,10 +33,10 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@v4
       - name: Check Spelling
-        uses: streetsidesoftware/cspell-action@v2
+        uses: streetsidesoftware/cspell-action@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          files: "**/*.{md}"
+          files: "**"
           config: .vscode/cspell.json
           incremental_files_only: false
           verbose: true
