@@ -26,6 +26,13 @@ jobs:
             chore
             revert
           requireScope: false
+  validate_changelog_description:
+    name: Validate Changelog Description
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Check for TODO statement"
+        run: |
+          [ $(grep "TODO: Someone should write a nice description for this CHANGELOG" **/*.md | wc -l) = 0 ]
   validate_spelling:
     name: Validate Spelling
     runs-on: ubuntu-latest
