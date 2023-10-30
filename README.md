@@ -5,6 +5,8 @@
 
 Changelogs for open source tools maintained by [Very Good Ventures](https://github.com/VeryGoodOpenSource).
 
+View them on [vgv.dev](https://vgv.dev/)!
+
 [logo_black]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_black.png#gh-light-mode-only
 [logo_white]: https://raw.githubusercontent.com/VGVentures/very_good_brand/main/styles/README/vgv_logo_white.png#gh-dark-mode-only
 [very_good_ventures_link_dark]: https://verygood.ventures/#gh-dark-mode-only
