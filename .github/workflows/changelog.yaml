@@ -34,12 +34,6 @@ jobs:
           export CHANGELOG_GITHUB_TOKEN=${{ secrets.CHANGELOG_GITHUB_TOKEN}}
           deno run --allow-net --allow-env generate-changelog.ts > ${{ steps.environment.outputs.year }}/${{ steps.environment.outputs.date }}.md
 
-      - name: Prettify/Format CHANGELOG
-        uses: creyD/prettier_action@v4.3
-        with:
-          prettier_options: --write **/*.{md}
-          only_changed: True
-
       - name: 🏁 Create Pull Request
         uses: peter-evans/create-pull-request@v5
         with:
