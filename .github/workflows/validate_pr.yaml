@@ -25,6 +25,8 @@ jobs:
     name: Validate Changelog Description
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v4
       - name: "Check for TODO statement"
         run: |
           if [ $(grep "TODO: Someone should write a nice description for this CHANGELOG" **/*.md | wc -l) != 0 ]; then exit 1; fi
