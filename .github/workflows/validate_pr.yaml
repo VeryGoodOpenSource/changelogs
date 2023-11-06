@@ -27,7 +27,7 @@ jobs:
     steps:
       - name: "Check for TODO statement"
         run: |
-          [ $(grep "TODO: Someone should write a nice description for this CHANGELOG" **/*.md | wc -l) = 0 ]
+          if [ $(grep "TODO: Someone should write a nice description for this CHANGELOG" **/*.md | wc -l) != 0 ]; then exit 1; fi
   validate_spelling:
     name: Validate Spelling
     runs-on: ubuntu-latest
