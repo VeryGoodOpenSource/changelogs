@@ -73,7 +73,8 @@ async function getMorePullRequests(org: string, repo: Repo, page: number = 1): P
   });
 
   if (response.status != 200) {
-    throw new Error(`[ERROR] GET ${url} (${response.status})`);
+    console.error(`[ERROR] GET ${url} (${response.status})`);
+    return pullRequests;
   }
 
   const body = (await response.json()) as Array<JSONObject>;
