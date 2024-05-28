@@ -41,6 +41,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           files: "**"
-          config: .vscode/cspell.json
+          config: .github/cspell.json
           incremental_files_only: false
           verbose: true
