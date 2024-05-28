@@ -1,0 +1,3 @@
+# actual english words (or common abbreviations) missing from CSpell
+Photobooth
+todos

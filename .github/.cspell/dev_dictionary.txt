@@ -1,0 +1,16 @@
+# other phrases that are not words but are getting flagged. Typically contained in localization files or urls
+brickhub
+codeowner
+depandabot
+devserver
+firestore
+Fluttercon
+formz
+gradlew
+mockingjay
+mocktail
+pana
+pubignore
+pubspec
+talkstream
+verygoodopensource
