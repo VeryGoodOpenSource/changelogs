@@ -12,5 +12,6 @@ mocktail
 pana
 pubignore
 pubspec
+pubspecs
 talkstream
 verygoodopensource
