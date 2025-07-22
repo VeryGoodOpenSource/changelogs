@@ -25,6 +25,7 @@ gonzalogauto
 HenriqueNas
 ianmaciel
 isAlmogK
+ItsAlexousd
 jackgllghr
 JakeHadley
 jamesblasco
@@ -52,10 +53,10 @@ marcellocamara
 matiasleyba
 mattiapispisa
 mia-recki
-mrgnhnt96
-mrverdant13
 MrCsabaToth
+mrgnhnt96
 MrSagarShah
+mrverdant13
 mtwichel
 Muhammed-Ayad
 mxknt
@@ -64,7 +65,6 @@ NurRozikin
 pablojimpas
 pattobrien
 PiotrFLEURY
-quocanhbk
 Renan's
 renancaraujo
 rubenferreira97
