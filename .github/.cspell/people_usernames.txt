@@ -25,6 +25,7 @@ gonzalogauto
 HenriqueNas
 ianmaciel
 isAlmogK
+ItsAlexousd
 jackgllghr
 JakeHadley
 jamesblasco
@@ -33,6 +34,7 @@ jdebecka
 jneschisi
 jorgecoca
 jsgalarraga
+juandelgado
 jxstxn1
 karokojnr
 kelvinwieth
@@ -49,13 +51,14 @@ macoshita
 mafreud
 maheini
 marcellocamara
+marcossevilla
 matiasleyba
 mattiapispisa
 mia-recki
-mrgnhnt96
-mrverdant13
 MrCsabaToth
+mrgnhnt96
 MrSagarShah
+mrverdant13
 mtwichel
 Muhammed-Ayad
 mxknt
@@ -63,6 +66,7 @@ ndelanou
 NurRozikin
 pablojimpas
 pattobrien
+pietroid
 PiotrFLEURY
 quocanhbk
 Renan's
