@@ -11,6 +11,7 @@ b-nugent
 bbariskilic
 cgutierr-zgz
 chanan
+Crdzbird
 davidmartos96
 dezsocsete
 DiRuffy
@@ -25,6 +26,7 @@ femalemonkeyman
 gabrielrozendo
 gonzalogauto
 HenriqueNas
+Huntaylor
 ianmaciel
 isAlmogK
 ItsAlexousd
@@ -94,7 +96,9 @@ tomarra
 tomassasovsky
 unger1984
 verygoodstefan
+vgvbot
 wallen
+Weidner
 willhlas
 wolfenrain
 yaksh1
