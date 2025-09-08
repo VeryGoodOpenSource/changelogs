@@ -24,6 +24,7 @@ feduke-nukem
 felangel
 femalemonkeyman
 gabrielrozendo
+gnarhard
 gonzalogauto
 HenriqueNas
 Huntaylor
@@ -102,6 +103,7 @@ Weidner
 willhlas
 wolfenrain
 yaksh1
+yashas
 ycchuang305
 yczar
 YousefSalahKassem
