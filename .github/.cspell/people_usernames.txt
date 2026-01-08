@@ -28,6 +28,7 @@ gabrielrozendo
 gnarhard
 gonzalogauto
 HenriqueNas
+hudson-proenca
 Huntaylor
 ianmaciel
 isAlmogK
