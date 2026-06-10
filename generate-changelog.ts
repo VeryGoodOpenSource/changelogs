@@ -38,7 +38,6 @@ const pullRequests = await getPullRequests(org, repositories);
 const today = format(now, "MM-dd-yyyy");
 
 console.log(`# Very Good Changelog (${today})`);
-console.log(`\nTODO: Someone should write a nice description for this CHANGELOG`);
 
 for (const repo of repositories) {
   const repoPullRequests = pullRequests[repo.name];
