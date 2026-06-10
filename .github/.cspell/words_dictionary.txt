@@ -1,3 +1,4 @@
 # actual english words (or common abbreviations) missing from CSpell
+frontmatter
 Photobooth
 todos

@@ -1,6 +1,8 @@
 # other phrases that are not words but are getting flagged. Typically contained in localization files or urls
+agentskills
 brickhub
 codeowner
+CODEOWNERS
 depandabot
 devserver
 firestore
