@@ -5,6 +5,7 @@ codeowner
 CODEOWNERS
 depandabot
 devserver
+evals
 firestore
 Fluttercon
 formz
@@ -12,6 +13,7 @@ gradlew
 mockingjay
 mocktail
 pana
+promptfoo
 pubignore
 pubspec
 pubspecs
