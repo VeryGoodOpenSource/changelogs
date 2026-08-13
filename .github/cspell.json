@@ -32,5 +32,6 @@
       "addWords": true
     }
   ],
-  "ignorePaths": []
+  "ignorePaths": [],
+  "enableFiletypes": ["yaml", "yml"]
 }
