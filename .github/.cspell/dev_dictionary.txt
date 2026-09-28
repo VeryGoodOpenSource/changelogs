@@ -6,10 +6,13 @@ CODEOWNERS
 depandabot
 devserver
 evals
+ffca
 firestore
 Fluttercon
 formz
+genui
 gradlew
+jaspr
 mockingjay
 mocktail
 pana
