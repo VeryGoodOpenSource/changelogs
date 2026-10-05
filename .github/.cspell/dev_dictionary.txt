@@ -20,5 +20,7 @@ promptfoo
 pubignore
 pubspec
 pubspecs
+runtimetype
 talkstream
+tostring
 verygoodopensource
