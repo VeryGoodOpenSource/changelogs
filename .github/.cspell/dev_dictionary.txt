@@ -23,4 +23,5 @@ pubspecs
 runtimetype
 talkstream
 tostring
+unicoder
 verygoodopensource
