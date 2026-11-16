@@ -13,6 +13,7 @@ formz
 genui
 gradlew
 jaspr
+lcov
 mockingjay
 mocktail
 pana
